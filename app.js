@@ -9,7 +9,7 @@ var mongoose = require('mongoose')
 var routes = require('./routes/index');
 var api = require('./routes/api');
 
-var dbUrl = 'mongodb://localhost/startup-api'
+var dbUrl = process.env.MONGODB_URI || 'mongodb://localhost/startup-api'
 mongoose.connect(dbUrl, function(err, res){
   if (err){
     console.log('DB CONNECTION ERROR: '+err)
