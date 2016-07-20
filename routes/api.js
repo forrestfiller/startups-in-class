@@ -8,115 +8,61 @@ var controllers = {
     startup: StartupController,
     profile: ProfileController
 }
-
 router.post('/:resource', function(req, res, next) {
-	var resource = req.params.resource
-	if (resource == 'profile'){ // create a profile
-		Profile.create(req.body, function(err, profile){
-			if (err){ //something went wrong
-	  	  		res.json({
-	  	  			confirmation: 'fail',
-	  	  			message: err
-	  	  		})
+    var resource = req.params.resource
+    var controller = controllers[resource]
+    if (controller == null){
+        res.json({
+            confirmation: 'fail',
+            message: 'Invalid Request'
+        })
+        return
+      }
 
-	  	  		return
-  	  		}
+      controller.post(req.body, function(err, result){
+          if (err){
+              res.json({
+                  confirmation: 'fail',
+                  message: err
+              })
+              return
+          }
 
-  	  		//it worked:
-  	  		res.json({
-  	  			confirmation: 'success',
-  	  			profile: profile
-  	  		})
-
-		})
-	} 
-
-	if (resource == 'startup'){ // create a startup
-		Startup.create(req.body, function(err, startup){
-			if (err){ //something went wrong
-  	  		res.json({
-  	  			confirmation: 'fail',
-  	  			message: err
-  	  		})
-
-  	  		return
-  	  		}
-  	  		//it worked:
-  	  		res.json({
-  	  			confirmation: 'success',
-  	  			startup: startup
-  	  		})
-
-		})
-	} 	
-})
-
+          res.json({
+              confirmation: 'success',
+              results: results
+          })
+          return
+      })
+  })
 
 router.get('/:resource', function(req, res, next) {
     var resource = req.params.resource
 
     var controller = controllers[resource]
-    controller.get(req.query, function(err, results){
-        if (err){
-            res.json({
-                confirmation: 'fail',
-                message: err
-            })
-            return
-        }
-        
+    if (controller == null){
         res.json({
-            confirmation: 'success',
-            results: results
+            confirmation: 'fail',
+            message: 'Invalid Request'
         })
         return
-    })
-  
-  // if (resource == 'startup'){ // user is requesting all startup info from DB
-  //   StartupController.get(req.query, function(err, results){
-  //     if (err){
-  //         res.json({
-  //             confirmation: 'fail',
-  //             message: err
-  //         })
-  //         return
-  //       }
-        
+      }
 
-  //       res.json({
-  //           confirmation: 'success',
-  //           results: results
-  //       })
-  //       return
-  //     })
-  // }
+      controller.get(req.query, function(err, results){
+          if (err){
+              res.json({
+                  confirmation: 'fail',
+                  message: err
+              })
+              return
+          }
 
-  // if (resource == 'profile'){ // user is requesting all startup info from DB
-  // 	// DB querry for all startups in our  backend:
-
-  //   Profile.find(req.query, function(err, profiles){
-  // 	  if (err){ //something went wrong
-  // 	    res.json({
-		//   confirmation: 'fail',
-		//   message: err
-  // 	  	})
-  // 	  	return
-  // 	  }
-
-	 //  res.json({
-	 //    confirmation: 'success',
-	 //  	profiles: profiles
-	 //  })
-
-  // 	})
-  // }  
-  
-})
-
-
-  
-
-
-
+          res.json({
+              confirmation: 'success',
+              results: results
+          })
+          return
+      })
+  })
 
 module.exports = router
