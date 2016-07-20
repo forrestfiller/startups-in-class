@@ -49,27 +49,27 @@ router.post('/:resource', function(req, res, next) {
 
 
 router.get('/:resource', function(req, res, next) {
- 
-  var resource = req.params.resource
+ var resource = req.params.resource
+  
   if (resource == 'startup'){ // user is requesting all startup info from DB
-  	// DB querry for all startups in our  backend:
+    StartupController.get(req.query, function(err, results){
+      if (err){
+          res.json({
+              confirmation: 'fail',
+              message: err
+          })
+          return
+        }
+        
 
-  	  Startup.find(req.query, function(err, startups){
-  	  	if (err){ //something went wrong
-  	  		res.json({
-  	  			confirmation: 'fail',
-  	  			message: err
-  	  		})
+        res.json({
+            confirmation: 'success',
+            results: results
+        })
+        return
 
-  	  		return
-  	  	}
+      })
 
-  	  	res.json({
-  	  		confirmation: 'success',
-  	  		startups: startups
-  	  	})
-
-  	  })
   }
 
   if (resource == 'profile'){ // user is requesting all startup info from DB
