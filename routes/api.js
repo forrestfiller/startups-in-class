@@ -2,6 +2,8 @@ var express = require('express')
 var router = express.Router()
 var Startup = require('../models/Startup')
 var Profile = require('../models/Profile')
+var ProfileController = require('../controllers/ProfileController')
+var StartupController = require('../controllers/StartupController')
 
 router.post('/:resource', function(req, res, next) {
 	var resource = req.params.resource
