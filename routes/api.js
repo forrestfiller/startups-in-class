@@ -4,6 +4,10 @@ var Startup = require('../models/Startup')
 var Profile = require('../models/Profile')
 var ProfileController = require('../controllers/ProfileController')
 var StartupController = require('../controllers/StartupController')
+var controllers = {
+    startup: StartupController,
+    profile: ProfileController
+}
 
 router.post('/:resource', function(req, res, next) {
 	var resource = req.params.resource
@@ -49,48 +53,63 @@ router.post('/:resource', function(req, res, next) {
 
 
 router.get('/:resource', function(req, res, next) {
- var resource = req.params.resource
-  
-  if (resource == 'startup'){ // user is requesting all startup info from DB
-    StartupController.get(req.query, function(err, results){
-      if (err){
-          res.json({
-              confirmation: 'fail',
-              message: err
-          })
-          return
+    var resource = req.params.resource
+
+    var controller = controllers[resource]
+    controller.get(req.query, function(err, results){
+        if (err){
+            res.json({
+                confirmation: 'fail',
+                message: err
+            })
+            return
         }
         
-
         res.json({
             confirmation: 'success',
             results: results
         })
         return
+    })
+  
+  // if (resource == 'startup'){ // user is requesting all startup info from DB
+  //   StartupController.get(req.query, function(err, results){
+  //     if (err){
+  //         res.json({
+  //             confirmation: 'fail',
+  //             message: err
+  //         })
+  //         return
+  //       }
+        
 
-      })
+  //       res.json({
+  //           confirmation: 'success',
+  //           results: results
+  //       })
+  //       return
+  //     })
+  // }
 
-  }
+  // if (resource == 'profile'){ // user is requesting all startup info from DB
+  // 	// DB querry for all startups in our  backend:
 
-  if (resource == 'profile'){ // user is requesting all startup info from DB
-  	// DB querry for all startups in our  backend:
+  //   Profile.find(req.query, function(err, profiles){
+  // 	  if (err){ //something went wrong
+  // 	    res.json({
+		//   confirmation: 'fail',
+		//   message: err
+  // 	  	})
+  // 	  	return
+  // 	  }
 
-    Profile.find(req.query, function(err, profiles){
-  	  if (err){ //something went wrong
-  	    res.json({
-		  confirmation: 'fail',
-		  message: err
-  	  	})
-  	  	return
-  	  }
+	 //  res.json({
+	 //    confirmation: 'success',
+	 //  	profiles: profiles
+	 //  })
 
-	  res.json({
-	    confirmation: 'success',
-	  	profiles: profiles
-	  })
-
-  	})
-  }  
+  // 	})
+  // }  
   
 })
 
