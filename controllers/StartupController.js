@@ -13,6 +13,17 @@ module.exports = {
 		})
   	},
 
+	getById: function(id, callback){
+	    Startup.findById(id, function(err, startup){
+	    	if (err){ // not found
+  	  			callback(err, null)
+  	  			return
+  	  		}
+  	  		
+  	  		callback(null, startup)
+	    })
+	},
+
   	post: function(params, callback){
   		Startup.create(params, function(err, startup){
 			if (err){ //something went wrong

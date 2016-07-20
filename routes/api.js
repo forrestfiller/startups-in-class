@@ -33,10 +33,39 @@ router.get('/:resource', function(req, res, next) {
             confirmation: 'success',
             results: results
         })
-
         return
     })
 })
+
+router.get('/:resource/:id', function(req, res, next) {
+    var resource = req.params.resource
+    var controller = controllers[resource]
+    if (controller == null){
+        res.json({
+            confirmation: 'fail',
+            message: 'Invalid Request'
+        })
+        return
+    }
+
+    var id = req.params.id
+    controller.getById(id, function(err, result){
+        if (controller == null){
+            res.json({
+                confirmation: 'fail',
+                message: err
+            })
+            return
+        }
+
+        res.json({
+            confirmation: 'success',
+            result: result
+        })
+        return
+    })
+})    
+
 
 router.post('/:resource', function(req, res, next) {
     var resource = req.params.resource
@@ -45,8 +74,8 @@ router.post('/:resource', function(req, res, next) {
           res.json({
               confirmation: 'fail',
               message: 'Invalid Request'
-        })
-        return
+          })
+          return
       }
 
     controller.post(req.body, function(err, result){
@@ -54,8 +83,8 @@ router.post('/:resource', function(req, res, next) {
             res.json({
                 confirmation: 'fail',
                 message: err
-          })
-          return
+            })
+            return
         }
 
         res.json({

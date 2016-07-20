@@ -15,6 +15,17 @@ module.exports = {
 		})
 	},
 
+	getById: function(id, callback){
+	    Profile.findById(id, function(err, profile){
+	    	if (err){ //something not found
+  	  			callback(err, null)
+  	  			return
+  	  		}
+  	  		
+  	  		callback(null, profile)
+	    })
+	},
+
 	post: function(params, callback){
 		Profile.create(params, function(err, profile){
 			if (err){ //something went wrong
