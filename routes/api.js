@@ -89,7 +89,7 @@ router.post('/:resource', function(req, res, next) {
 
         res.json({
             confirmation: 'success',
-            results: results
+            result: result
         })
         return
     })
