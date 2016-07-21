@@ -11,7 +11,8 @@
   		<input type="text" name="name" placeholder="Name" /><br />
   		<input type="text" name="city" placeholder="City" /><br /> 
   		<input type="text" name="founder" placeholder="Founder" /><br /> 
-  		<input type="text" name="shares" placeholder="Shares (in million)" /><br />  
+  		<input type="text" name="image" placeholder="Image" /><br /> 
+      <input type="text" name="shares" placeholder="Shares (in million)" /><br />  
   		<input type="submit" value="Create Startup" />
   	</form>
 
