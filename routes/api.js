@@ -88,11 +88,11 @@ router.put('/:resource/:id', function(req, res, next) {
         }
 
         res.json({
-                confirmation: 'success',
-                result: result
-            })
-            return
+            confirmation: 'success',
+            result: result
         })
+        return
+    })
     })
 
 router.post('/:resource', function(req, res, next) {
