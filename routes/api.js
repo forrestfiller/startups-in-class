@@ -65,6 +65,10 @@ router.get('/:resource/:id', function(req, res, next) {
         return
     })
 })    
+// Update resource
+router.put('/:resource', function(req, res, next) {
+
+})
 
 
 router.post('/:resource', function(req, res, next) {
