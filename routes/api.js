@@ -66,10 +66,20 @@ router.get('/:resource/:id', function(req, res, next) {
     })
 })    
 // Update resource
-router.put('/:resource', function(req, res, next) {
+router.put('/:resource/:id', function(req, res, next) {
+    var resource = req.params.resource
+    var controller = controllers[resource]
+    if (controller == null){
+        res.json({
+            confirmation: 'fail',
+            message: 'Invalid Request'
+        })
+        return
+    }
+
+    var id = req.params.id
 
 })
-
 
 router.post('/:resource', function(req, res, next) {
     var resource = req.params.resource

@@ -33,5 +33,22 @@ module.exports = {
   	  		
   	  		callback(null, startup)
   		})
-  	}
+  	},
+
+    put: function(id, params, callback){
+        Startup.findByIdAndUpdate(id, params, {new:true}, function(err, startup){
+            if (err){ // not found
+                callback(err, null)
+                return
+            }
+            
+            callback(null, startup)
+        })
+    }
+
+
+
+
+
+
 }
